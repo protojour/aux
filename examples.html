@@ -1,0 +1,34 @@
+---
+layout: default
+---
+
+      {% include leftside.html %}
+      <section>
+        {% include menu.html %}
+
+
+        <h4>Creating plugins</h4>
+        <pre>
+          aux --create_plugin=service myservice
+          pip install -e aux_service_myservice/
+        </pre>
+        <pre>
+          aux --create_plugin=device mydevice
+          pip install -e aux_device_mydevice
+        </pre>
+        <pre>
+          aux --create_plugin=protocol sip
+          pip install -e aux_protocol_sip
+        </pre>
+        <h4>Loading plugins</h4>
+        <pre>
+          from aux.system.service.ext import myservice
+          from aux.system.device.ext import mydevice
+          from aux.protocol.ext import sip
+        </pre>
+      </section>
+      <!-- <footer class="site-footer"> -->
+      <!--   <p>This project is maintained by <a href="https://github.com/protojour">protojour</a></p> -->
+      <!-- </footer> -->
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
