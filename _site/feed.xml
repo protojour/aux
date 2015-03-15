@@ -4,10 +4,10 @@
     <title>Auxiliary</title>
     <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
 </description>
-    <link>http://protojour.github.io/auxiliary/auxiliary//</link>
-    <atom:link href="http://protojour.github.io/auxiliary/auxiliary//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 02 Mar 2015 21:16:48 +0100</pubDate>
-    <lastBuildDate>Mon, 02 Mar 2015 21:16:48 +0100</lastBuildDate>
+    <link>http://protojour.github.io/auxiliary/aux//</link>
+    <atom:link href="http://protojour.github.io/auxiliary/aux//feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 15 Mar 2015 23:11:06 +0100</pubDate>
+    <lastBuildDate>Sun, 15 Mar 2015 23:11:06 +0100</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -28,8 +28,8 @@
 
 </description>
         <pubDate>Mon, 09 Feb 2015 01:46:29 +0100</pubDate>
-        <link>http://protojour.github.io/auxiliary/auxiliary//jekyll/update/2015/02/09/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">http://protojour.github.io/auxiliary/auxiliary//jekyll/update/2015/02/09/welcome-to-jekyll.html</guid>
+        <link>http://protojour.github.io/auxiliary/aux//jekyll/update/2015/02/09/welcome-to-jekyll.html</link>
+        <guid isPermaLink="true">http://protojour.github.io/auxiliary/aux//jekyll/update/2015/02/09/welcome-to-jekyll.html</guid>
         
         
         <category>jekyll</category>
