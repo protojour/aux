@@ -97,7 +97,7 @@ class HTTPMessage(object):
 
 class HTTPRequest(HTTPMessage):
     url = None
-    def __init__(self, url, request_data={}):
+    def __init__(self, url, request_data={}):       
         self.method = request_data.get('method', 'GET').upper()
         self.url = urlparse(url)
         if len(self.url.path) == 0:
@@ -130,7 +130,8 @@ class HTTPResponse(HTTPMessage):
 
 class HTTP(object):
     __is_persistent = False
-
+    __has_trace = False
+    
     def __init__(self):
         self.logger = logging.getLogger('protocol')
         self._transport = None
@@ -156,6 +157,11 @@ class HTTP(object):
     def is_persistent(self):
         return self.__is_persistent
 
+    def has_trace(self, should_trace=None):
+        if should_trace is not None:
+            self.__has_trace = should_trace
+        return self.__has_trace
+    
     def set_url_from_string(self, raw_url):
         url = urlparse(raw_url)
         if not url.port:
@@ -196,6 +202,8 @@ class HTTP(object):
             else:
                 break
         tail_msg = tail_msg[len(t_lines[0]):]
+        if self.__has_trace:
+            print tail_msg
         log.debug(headers)
         Transfer = transferFactory(headers)
         Mime = mimeFactory(headers)
@@ -221,7 +229,13 @@ class HTTP(object):
     
 class HTTPClient(object):
     auth = auth
-
+    __has_trace = False
+    
+    def has_trace(self, should_trace=None):
+        if should_trace is not None:
+            self.__has_trace = should_trace
+        return self.__has_trace
+    
     def http_send(self, method, url, headers, body, request):
         if request == None:
             request = HTTPRequest(url,
@@ -229,6 +243,7 @@ class HTTPClient(object):
                                    'headers': headers,
                                    'body': body})
         _http = HTTP()
+        _http.has_trace(self.__has_trace)
         return _http.send(request)
 
     def head(self, url=None, headers={}, request=None):
