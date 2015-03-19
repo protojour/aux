@@ -1,12 +1,18 @@
 from aux.protocol.transport import TCP_DEFAULT_FRAME_SIZE
 import re
 
-class DefaultController(object):
 
+class NoContentController(object):
     def __init__(self, headers, transport, msg):
         self.headers = headers
         self.transport = transport
-        self.msg = msg
+        self.msg = msg.lstrip()
+
+    def read(self):
+        return self.msg.rstrip()
+
+
+class DefaultController(NoContentController):
 
     def read(self):
         raw_response = self.msg
@@ -20,27 +26,14 @@ class DefaultController(object):
             response += raw_response
             content_length -= len(raw_response)
             raw_response = ""
-        return response
-
-class NoContentController(object):
-    def __init__(self, headers, transport, msg):
-        self.headers = headers
-        self.transport = transport
-        self.msg = msg
-
-    def read(self):
-        return self.msg
+        return response.rstrip()
 
 
-class ChunkedController(object):
+class ChunkedController(NoContentController):
 
-    def __init__(self, headers, transport, msg):
-        self.headers = headers
-        self.transport = transport
-        self.msg = msg
         
-    def read(self):
-        re_chunk = re.compile(r'^([a-f|\d]{1,4})\r\n')
+    def read(self, has_trace=False):
+        re_chunk = re.compile(r'^([a-f|\d]{1,4})')
         re_end_chunk = re.compile(r'^0\r\n\r\n0')
         re_single_end_chunk = re.compile(r'0\r\n\r\n')
         raw_response = self.msg
@@ -48,6 +41,7 @@ class ChunkedController(object):
         block = 0
         chunk_cdown = 0
         i_next_chunk = 0
+
         while 1:
             if chunk_cdown == 0:
                 next_chunk = re_chunk.findall(raw_response[0:8])
@@ -59,10 +53,11 @@ class ChunkedController(object):
                     raw_response = raw_response[len(next_chunk[0])+2:]
                     if i_next_chunk == 0 or len(end_chunk) > 0:
                         break
+            # print next_chunk, end_chunk, broken_end_chunk, i_next_chunk, chunk_cdown
             if len(broken_end_chunk) > 0:
                 break
             if i_next_chunk > len(raw_response):
-                    raw_response += self.transport.recv()
+                raw_response += self.transport.recv()
             if len(raw_response) <= 0:
                 break
             block, nl_skip = (len(raw_response), 0) if len(raw_response) < chunk_cdown else (chunk_cdown, 1)

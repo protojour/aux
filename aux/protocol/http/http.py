@@ -202,8 +202,8 @@ class HTTP(object):
             else:
                 break
         tail_msg = tail_msg[len(t_lines[0]):]
-        if self.__has_trace:
-            print tail_msg
+        # if self.__has_trace:
+        #     print tail_msg
         log.debug(headers)
         Transfer = transferFactory(headers)
         Mime = mimeFactory(headers)
