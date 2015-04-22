@@ -131,7 +131,6 @@ class Configuration(object):
         if system_json is not None:        
             for system in system_json:
                 systems_pool.append( system )
-        
             
 config = Configuration() if 'aux' in sys.argv[0] else None
 

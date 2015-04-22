@@ -61,7 +61,7 @@ def run():
     config.set_systems()
     #configuration.system
     ## - run
-    print execfile(scripts_as_args[0])
+    print(execfile(scripts_as_args[0]))
     ## - do teardown
     engine.stop()
     logcontroller.summary['ended'] = datetime.now()

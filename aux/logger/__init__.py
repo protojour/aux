@@ -28,7 +28,7 @@ class LogController(object):
                             format='%(asctime)s:%(name)s:%(levelname)s:%(message)s',
                             filename='%s/all.log' % logdir,
                             filemode='w')
-        for loggername in ['runtime', 'protocol', 'script']:
+        for loggername in ['runtime', 'protocol', 'script', 'systems']:
             self.loggers[loggername] = self.__new_logger(loggername, logdir)
             
         if self.log_verbose:
