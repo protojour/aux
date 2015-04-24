@@ -8,10 +8,13 @@ class Authentication(object):
         def __call__(self, json_data):
             self.basic = json_data.get('base64', None)
             if self.basic is None:
-                self.basic = base64.b64encode("%s:%s" % (json_data.get('username'),
-                                                         json_data.get('password') ))
+                self.basic = base64.b64encode("Basic %s:%s" % (json_data.get('username'),
+                                                               json_data.get('password') ))
         def __repr__(self):
-            return "Basic : %s" % self.basic
+            return self.basic
+
+        def dict(self):
+            return {"Authorization" : "%s" % self.basic}
         
     class SSHAuth(object):
         username = None
