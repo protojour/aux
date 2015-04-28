@@ -226,10 +226,19 @@ class HTTP(object):
         response.request_pointer = request
         return response
 
+class HTTPScheme(object):
+    scheme = "http://"
+    
+    def __call__(self, scheme):
+        self.scheme = scheme
+
+    def __repr__(self):
+        return self.scheme
     
 class HTTPClient(object):
     auth = auth
     __has_trace = False
+    scheme = HTTPScheme()
     
     def has_trace(self, should_trace=None):
         if should_trace is not None:

@@ -46,7 +46,6 @@ def run():
 
     ## - Setup
     logcontroller.summary['started'] = datetime.now()
-    logcontroller.summary['systems'] = config.options.systems
 
     scripts_as_args = [script for script in config.args if '.py' in script]
     if len(scripts_as_args) != 1:
@@ -60,6 +59,8 @@ def run():
     ## - verify systems
     config.set_systems()
     #configuration.system
+    #script
+    #TODO: copy script to log_folder
     ## - run
     print(execfile(scripts_as_args[0]))
     ## - do teardown

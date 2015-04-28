@@ -2,7 +2,7 @@ from aux import version
 from datetime import datetime
 import ConfigParser, os
 import logging
-
+import shutil
 
 class LogController(object):
     summary = dict()
@@ -20,22 +20,24 @@ class LogController(object):
             self.log_file_level = config.options.log_file_level
         self.log_verbose = config.options.verbose
         self.log_result_server = config.options.log_server
-        logdir = os.path.join(self.log_directory,
-                              datetime.strftime(datetime.now(), "%Y%m%d-%H%M%S%f"))
-        if not os.path.exists(logdir):
-            os.makedirs(logdir)
+        self.log_run_dir = os.path.join(self.log_directory,
+                                        datetime.strftime(datetime.now(), "%Y%m%d-%H%M%S%f"))
+        if not os.path.exists(self.log_run_dir):
+            os.makedirs(self.log_run_dir)
         logging.basicConfig(level=self.log_file_level,
                             format='%(asctime)s:%(name)s:%(levelname)s:%(message)s',
-                            filename='%s/all.log' % logdir,
+                            filename='%s/all.log' % self.log_run_dir,
                             filemode='w')
         for loggername in ['runtime', 'protocol', 'script', 'systems']:
-            self.loggers[loggername] = self.__new_logger(loggername, logdir)
+            self.loggers[loggername] = self.__new_logger(loggername, self.log_run_dir)
             
         if self.log_verbose:
             self.pprint_header_on_init()
             
-        self.summary['logs'] = logdir
-        self.summary['success'] = True
+        self.summary['logs'] = self.log_run_dir
+        self.summary['success'] = True #TODO: bad assumption
+        config.options.systems = self.copy_systems_file_to_logdir(config.options.systems)
+        self.summary['systems'] = config.options.systems
         
         self.runtime.debug('Config options :\n%s' % self.config.options)
         self.runtime.debug('Config arguments :\n %s' % self.config.args)
@@ -101,4 +103,21 @@ class LogController(object):
                 print "- %s: %s" % (key, self.summary[key])
             print "-"*70
                 
+    def copy_systems_file_to_logdir(self, systems):
+        newurl = None
+        if systems is not None:
+            if '.json' in systems:
+                url = os.path.abspath(systems)
+                newurl = os.path.join(self.log_run_dir, systems)
+                shutil.copyfile(url, newurl)
+            else:
+                newurl = os.path.join(self.log_run_dir, "systems.json")
+                fp = open(newurl,"w")
+                fp.write(systems)
+                fp.close()
+            return newurl
+        return "No systems set."
 
+        
+
+        

@@ -1,5 +1,7 @@
 import base64
+import logging
 
+log = logging.getLogger("systems")
 
 class Authentication(object):
     #TODO: this responsibility should be moved out of base system definition
@@ -10,6 +12,7 @@ class Authentication(object):
             if self.basic is None:
                 self.basic = base64.b64encode("Basic %s:%s" % (json_data.get('username'),
                                                                json_data.get('password') ))
+                log.debug("Basic authentication credentials changed")
         def __repr__(self):
             return self.basic
 
@@ -47,8 +50,10 @@ class BaseSystem(object):
         root = self.__getattribute__(path[0])
         prop = root.__getattribute__(path[1])
         prop(value)
+
         
     def inject_properties(self, properties):
-        for p in properties:
-            key = p.keys()[0]
-            self.inject_property(key, p.get(key))
+        if properties is not None:
+            for p in properties:
+                key = p.keys()[0]
+                self.inject_property(key, p.get(key))
