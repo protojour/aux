@@ -1,4 +1,4 @@
-from aux.protocol.transport import TCPTransport, TLS_TCPTransport
+from aux.protocol.transport import (TCPTransport, TLS_TCPTransport, TCP_DEFAULT_FRAME_SIZE)
 from urlparse import urlparse, urlunparse
 from aux.protocol.http.transfer import transferFactory
 from aux.protocol.http.mime import mimeFactory
@@ -172,7 +172,7 @@ class HTTP(object):
 
     def receive(self, transport):
         #TODO: this impl needs TLC
-        inbuf = transport.recv()
+        inbuf = transport.recv(TCP_DEFAULT_FRAME_SIZE)
         inbuf = inbuf.split("\n")
         # inbuf = transport.recv_all()
         sl = inbuf[0]
@@ -182,7 +182,6 @@ class HTTP(object):
         try:
             status = int(re_startline.match(sl).groups()[0])
         except Exception, e:
-            print e.message
             log.error(e.message)
             raise Exception
 
