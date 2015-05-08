@@ -72,6 +72,7 @@ class HTTP_RECEIVE_TEST(TestCase):
 0''' % (hex(len(content))[2:], content)
         http = HTTP()
         response = http.receive(FakeTransport(message))
+        print "[%s]" % response.body
         self.assertEqual(len( repr(response.body)[1:-1] ), 191)
         
     def test_receive_200_with_chunked_body(self):

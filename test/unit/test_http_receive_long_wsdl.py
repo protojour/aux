@@ -5,7 +5,7 @@ import os
 import re
 from ..data.wsdl_raw_chunked_response import chunked_message, received_wsdl_message
 from aux.protocol.transport import TCP_DEFAULT_FRAME_SIZE
-from aux.protocol.http.transfer import ALTChunkedController
+from aux.protocol.http.transfer import ChunkedController
 
 class FakeTransport(object):
 
@@ -59,19 +59,19 @@ class HTTP_RECEIVE_LONG_WSDL_TEST(TestCase):
         # print headers
         self.assertEquals(headers.get('Transfer-Encoding'),
                           'chunked')
-        Transfer = ALTChunkedController(headers, transport, tail_msg)
+        Transfer = ChunkedController(headers, transport, tail_msg)
         body = Transfer.read()
-        self.assertNotEquals(received_wsdl_message,
-                             body)
-        self.assertEqual(['1f09', '2000', '2000', '2000', '2000',
+        self.assertNotEquals(body,
+                             received_wsdl_message)
+        self.assertEqual(Transfer.chunks_in_stream,
+                         ['1f09', '2000', '2000', '2000', '2000',
                           '2000', '2000', '2000', '2000', '2000',
                           '2000', '2000', '2000', '2000', '2000',
                           '2000', '2000', '2000', '2000', '2000',
                           '2000', '2000', '2000', '2000', '2000',
-                          '1000', '81', '0'],
-                         Transfer.chunks_in_stream)
+                          '1000', '81', '0'])
 
-    def xtest_receive_long_wsdl(self):
+    def test_receive_long_wsdl(self):
         message = chunked_message
 
         http = HTTP()
