@@ -61,8 +61,8 @@ class HTTP_RECEIVE_LONG_WSDL_TEST(TestCase):
                           'chunked')
         Transfer = ChunkedController(headers, transport, tail_msg)
         body = Transfer.read()
-        self.assertNotEquals(body,
-                             received_wsdl_message)
+        self.assertEqual(body,
+                         received_wsdl_message)
         self.assertEqual(Transfer.chunks_in_stream,
                          ['1f09', '2000', '2000', '2000', '2000',
                           '2000', '2000', '2000', '2000', '2000',
@@ -71,7 +71,7 @@ class HTTP_RECEIVE_LONG_WSDL_TEST(TestCase):
                           '2000', '2000', '2000', '2000', '2000',
                           '1000', '81', '0'])
 
-    def test_receive_long_wsdl(self):
+    def xtest_receive_long_wsdl(self):
         message = chunked_message
 
         http = HTTP()

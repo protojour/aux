@@ -39,7 +39,7 @@ class HTTP_RECEIVE_TEST(TestCase):
         self.assertEquals(len(response.body), 0)
         self.assertEquals(len(response.headers), 9)
                           
-    def xtest_receive_200_with_json_body(self):
+    def test_receive_200_with_json_body(self):
         message = """HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: 15\r\n\r\n{{Hello:world}}"""
         http = HTTP()
         response = http.receive(FakeTransport(message))
@@ -72,8 +72,7 @@ class HTTP_RECEIVE_TEST(TestCase):
 0''' % (hex(len(content))[2:], content)
         http = HTTP()
         response = http.receive(FakeTransport(message))
-        print "[%s]" % response.body
-        self.assertEqual(len( repr(response.body)[1:-1] ), 191)
+        self.assertEqual(len( repr(response.body)[1:-1] ), 192)
         
     def test_receive_200_with_chunked_body(self):
         message = """HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nTransfer-Encoding : chunked\r\n\r\n1a\r\nABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n0\r\n\r\n0"""

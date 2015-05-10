@@ -2800,7 +2800,6 @@ ineSoap11">
 </wsdl:definitions>
 0'''
 
-
 received_wsdl_message = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch0="http://kezzlerssp.com/schemas/kcengine" xmlns:sch1="http://kezzlerssp.com/schemas/security" xmlns:sch2="http://kezzlerssp.com/schemas/common" xmlns:sch3="http://kezzlerssp.com/schema/metadata/foreign/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://kezzlerssp.com/schemas/kcengine" targetNamespace="http://kezzlerssp.com/schemas/kcengine">
   <wsdl:types>
     <xs:schema xmlns="http://kezzlerssp.com/schemas/kcengine" xmlns:ns0="http://kezzlerssp.com/schemas/common" xmlns:ns1="http://kezzlerssp.com/schemas/security" xmlns:ns2="http://kezzlerssp.com/schema/metadata/foreign/" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://kezzlerssp.com/schemas/kcengine"><xs:import namespace="http://kezzlerssp.com/schemas/common"/><xs:import namespace="http://kezzlerssp.com/schemas/security"/><xs:import namespace="http://kezzlerssp.com/schemas/common"/><xs:import namespace="http://kezzlerssp.com/schemas/common"/><xs:import namespace="http://kezzlerssp.com/schemas/common"/><xs:import namespace="http://kezzlerssp.com/schemas/common"/><xs:import namespace="http://kezzlerssp.com/schema/metadata/foreign/"/><xs:import namespace="http://kezzlerssp.com/schemas/security"/><xs:import namespace="http://kezzlerssp.com/schemas/security"/><xs:import namespace="http://kezzlerssp.com/schemas/common"/><xs:import namespace="http://kezzlerssp.com/schemas/security"/><xs:import namespace="http://kezzlerssp.com/schemas/common"/><xs:import namespace="http://kezzlerssp.com/schemas/security"/><xs:import namespace="http://kezzlerssp.com/schemas/common"/><xs:element name="ListCodePatternsRequest"><xs:annotation><xs:documentation>Request a list of all available code types that can be ordered.</xs:documentation></xs:annotation><xs:complexType/></xs:element><xs:element name="ListCodePatternsResponse"><xs:complexType><xs:sequence><xs:element maxOccurs="unbounded" minOccurs="0" name="codePattern"><xs:complexType><xs:attribute name="id" type="xs:string" use="required"><xs:annotation><xs:documentation>The ID of the code pattern</xs:documentation></xs:annotation></xs:attribute><xs:attribute name="description" type="xs:string" use="required"><xs:annotation><xs:documentation>A text description of the code pattern</xs:documentation></xs:annotation></xs:attribute><xs:attribute name="minLength" type="xs:positiveInteger" use="required"><xs:annotation><xs:documentation>The minimum code length that can be ordered</xs:documentation></xs:annotation></xs:attribute><xs:attribute name="defaultLength" type="xs:positiveInteger" use="required"><xs:annotation><xs:documentation>The default code length of this code pattern</xs:documentation></xs:annotation></xs:attribute><xs:attribute name="maxLength" type="xs:positiveInteger" use="required"><xs:annotation><xs:documentation>The maximum code length allowed for this code pattern</xs:documentation></xs:annotation></xs:attribute><xs:attribute name="caseSensitive" type="xs:boolean" use="required"><xs:annotation><xs:documentation>Whether this code is case sensitive or not</xs:documentation></xs:annotation></xs:attribute></xs:complexType></xs:element></xs:sequence><xs:attribute name="defaultCase" type="CodeCase" use="required"><xs:annotation><xs:documentation>The default code case if the code is case-insensitive</xs:documentation></xs:annotation></xs:attribute></xs:complexType></xs:element><xs:element name="ListOrdersRequest"><xs:annotation><xs:documentation>Request a list of all available orders with optional filtering offset and maximum number of results.</xs:documentation></xs:annotation><xs:complexType><xs:complexContent><xs:extension base="ns0:PageRequest"><xs:sequence><xs:element minOccurs="0" name="metadataFilter" type="xs:string"><xs:annotation><xs:documentation>A search string that will filter all orders not containing the meta-data
@@ -4495,7 +4494,7 @@ received_wsdl_message = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?
       <wsdl:output name="ReadCodeConfigResponse">
         <soap:body use="literal"/>
       </wsdl:output>
-</wsdl:operation>
+    </wsdl:operation>
     <wsdl:operation name="ListSections">
       <soap:operation soapAction=""/>
       <wsdl:input name="ListSectionsRequest">
@@ -4956,7 +4955,7 @@ received_wsdl_message = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="DeactivateSection">
-<soap:operation soapAction=""/>
+      <soap:operation soapAction=""/>
       <wsdl:input name="DeactivateSectionRequest">
         <soap:body use="literal"/>
       </wsdl:input>
@@ -5538,4 +5537,3 @@ received_wsdl_message = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>'''
-
