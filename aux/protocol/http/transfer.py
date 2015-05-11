@@ -31,8 +31,9 @@ class DefaultController(NoContentController):
 
 class ChunkedController(NoContentController):
 
-    chunks_in_stream = list()
-
+    def __init__(self, headers, transport, msg):    
+        super(ChunkedController, self).__init__(headers, transport, msg)
+        self.chunks_in_stream = list()        
 
     def consume_buffer(self, i_chunk, raw_buffer):
         # print( i_chunk, len(raw_buffer) ) #TODO: (x)
