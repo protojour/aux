@@ -117,9 +117,12 @@ class WSDLDefinitions(object):
         self.name = e.get('name')
         self.types = [WSDLTypes(t) for t in self.e.findall('%stypes' % WSDLClient.get_ns(self.e, 'wsdl'))]
         self.messages = [WSDLMessage(m) for m in self.e.findall('%smessage' % WSDLClient.get_ns(self.e, 'wsdl'))]
-        self.portType = WSDLPortType(self.e.find('%sportType' % WSDLClient.get_ns(self.e, 'wsdl')))
-        self.binding = WSDLBinding(self.e.find('%sbinding' % WSDLClient.get_ns(self.e, 'wsdl')))
-        self.service = WSDLService(self.e.find('%sservice' % WSDLClient.get_ns(self.e, 'wsdl')))
+        porttype = self.e.find('%sportType' % WSDLClient.get_ns(self.e, 'wsdl'))
+        self.portType = WSDLPortType(porttype) if porttype is not None else None
+        binding = self.e.find('%sbinding' % WSDLClient.get_ns(self.e, 'wsdl'))
+        self.binding = WSDLBinding(binding) if binding is not None else None
+        service = self.e.find('%sservice' % WSDLClient.get_ns(self.e, 'wsdl'))
+        self.service = WSDLService(service) if service is not None else None
         
 
 class WSDLClient(object):
