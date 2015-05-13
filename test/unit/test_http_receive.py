@@ -72,13 +72,18 @@ class HTTPReceiveTest(TestCase):
 0''' % (hex(len(content))[2:], content)
         http = HTTP()
         response = http.receive(FakeTransport(message))
-        self.assertEqual(len( repr(response.body)[1:-1] ), 192)
+        self.assertEqual(len( repr(response.body)[1:-1] ), len(repr(content)[1:-1]))
+        self.assertEqual(response.body,
+                         content)
         
     def test_receive_200_with_chunked_body(self):
-        message = """HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nTransfer-Encoding : chunked\r\n\r\n1a\r\nABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n0\r\n\r\n0"""
+        content = """ABCDEFGHIJKLMNOPQRSTUVWXYZ"""
+        message = """HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nTransfer-Encoding : chunked\r\n\r\n1a\r\n%s\r\n0\r\n\r\n0""" % content
         http = HTTP()
         response = http.receive(FakeTransport(message))
         self.assertEqual(len(response.body), 26)
+        self.assertEqual(len(response.body), len(content))
+        self.assertEqual(response.body, content)
 
     def xtest_receive_200_with_chunked_multi_body(self):
         message = """HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nTransfer-Encoding : chunked\r\n\r\n1a\r\nABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n34\r\nABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n34\r\nABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n34\r\nABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n34\r\nABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n0\r\n\r\n0"""

@@ -121,10 +121,19 @@ class Configuration(object):
             if '.json' in self.options.systems:
                 url = os.path.abspath(self.options.systems)
                 fp = open(url, 'r')
-                system_json = json.loads(fp.read())
+                try:                
+                    system_json = json.loads(fp.read())
+                except Exception, e:
+                    print( "%s is not correctly formatted" % (self.options.systems))
+                    print( e.message )                    
                 fp.close()
             else:
-                system_json = json.loads(self.options.systems)
+                try:
+                    system_json = json.loads(self.options.systems)
+                except Exception, e:
+                    print( "%s is not correctly formatted" % (self.options.systems))
+                    print( e.message )
+    
         if system_json is not None:
             for system in system_json:
                 #populate pool of resources
