@@ -86,7 +86,6 @@ def get_system(systemjson):
             hostname = systemjson.get('hostname')
             systemtype = systemjson.get('systemtype')
             system_instance = find_systemtype(systemtype)(hostname)
-            print system.get('properties')
             return system_instance
         else:
             #doprobeoftype

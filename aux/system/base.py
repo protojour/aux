@@ -11,7 +11,7 @@ class Authentication(object):
             self.basic = json_data.get('base64', None)
             if self.basic is None:
                 self.basic = base64.b64encode("%s:%s" % (json_data.get('username'),
-                                                               json_data.get('password') ))
+                                                         json_data.get('password') ))
                 log.debug("Basic authentication credentials changed")
         def __repr__(self):
             return self.basic
@@ -56,3 +56,4 @@ class BaseSystem(object):
             for p in properties:
                 key = p.keys()[0]
                 self.inject_property(key, p.get(key))
+
