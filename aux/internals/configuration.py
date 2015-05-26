@@ -1,5 +1,6 @@
 import sys        
 import os
+import shutil
 import json
 import logging
 from optparse import OptionParser, OptionGroup
@@ -25,7 +26,6 @@ def str2loglevel(option, opt_str, value ,parser):
 
 def dir2abspath(option, opt_str, value ,parser):
     setattr(parser.values, option.dest, os.path.abspath(value))
-
             
 class Configuration(object):
     def __init__(self):
@@ -115,23 +115,30 @@ class Configuration(object):
         if self.options.verbose is False:
             self.options.verbose = file_configs.get('logging').get('verbose')
             
-
     def set_systems(self):
-        #populate pool of resources
         system_json = None
-
         if self.options.systems is not None:
             if '.json' in self.options.systems:
                 url = os.path.abspath(self.options.systems)
                 fp = open(url, 'r')
-                system_json = json.loads(fp.read())
+                try:                
+                    system_json = json.loads(fp.read())
+                except Exception, e:
+                    print( "%s is not correctly formatted" % (self.options.systems))
+                    print( e.message )                    
                 fp.close()
             else:
-                system_json = json.loads(self.options.systems)
-        if system_json is not None:        
+                try:
+                    system_json = json.loads(self.options.systems)
+                except Exception, e:
+                    print( "%s is not correctly formatted" % (self.options.systems))
+                    print( e.message )
+    
+        if system_json is not None:
             for system in system_json:
+                #populate pool of resources
+                #TODO: handle if systems is not set to list
                 systems_pool.append( system )
-        
             
 config = Configuration() if 'aux' in sys.argv[0] else None
 

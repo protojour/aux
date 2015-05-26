@@ -1,6 +1,6 @@
 from unittest2 import TestCase
 from urlparse import urlparse
-from aux.protocols.connection import TCPConnection, UDPConnection
+from aux.protocol.transport import TCPTransport, UDPTransport
 
 from socket import (AF_INET, SOCK_DGRAM, SOL_SOCKET,
                     SO_REUSEADDR)                                         
@@ -60,7 +60,7 @@ class MockTCPServer(object):
         self.__socket.close()
         
 
-class TCPConnectionTest(TestCase):
+class TCPTransportTest(TestCase):
     
     def setUp(self):
         self.test_server = MockTCPServer(port=8989)
@@ -70,7 +70,7 @@ class TCPConnectionTest(TestCase):
         self.test_server.stop()
         
     def test_connection(self):
-        conn = TCPConnection('127.0.0.1', 8989)
+        conn = TCPTransport('127.0.0.1', 8989)
         conn.connect()
         conn.send("hello world: END\n")
         data = conn.recv()
@@ -89,7 +89,7 @@ class UDPConnectionTest(TestCase):
         self.test_server.stop()
 
     def test_connection(self):
-        conn = UDPConnection('127.0.0.1', 8888)
+        conn = UDPTransport('127.0.0.1', 8888)
         conn.connect()
         conn.send("hello world UDP: END\n")
         data = conn.recv()
