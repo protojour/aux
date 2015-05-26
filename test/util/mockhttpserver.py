@@ -5,7 +5,7 @@ from ssl import wrap_socket
 import ssl
 import socket
 import time
-from aux.protocols.http import HTTPResponse, HTTPRequest
+from aux.protocol.http import HTTPResponse, HTTPRequest
 # from werkzeug import Response
 
 #TODO: This server needs to be written using aux itself, listening service.

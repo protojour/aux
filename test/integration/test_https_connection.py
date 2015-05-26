@@ -1,5 +1,5 @@
 from unittest2 import TestCase
-from aux.protocols.http import HTTP, HTTPRequest
+from aux.protocol.http import HTTP, HTTPRequest
 from ..util.mockhttpserver import MockHTTPSServer
 
 class HTTPSConnectionTest(TestCase):
