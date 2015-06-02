@@ -21,7 +21,7 @@ def plugin_creator_routine(plugincreator, arguments):
         if len(arguments) > 0:
             packagename = "_".join(['aux', 'device', arguments[0]])
             os.system('paster create -t basic_package -o %s --no-interactive %s' % (plugin_home_directory,
-                                                                                    npackagename))
+                                                                                    packagename))
         else:
             no_plugin_name_message()            
     elif 'protocol' in plugincreator:
@@ -33,3 +33,5 @@ def plugin_creator_routine(plugincreator, arguments):
             no_plugin_name_message()            
     print 'Install plugin by running:\npip install -e %s' % packagename        
     sys.exit(0)
+
+
