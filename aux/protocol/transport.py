@@ -5,7 +5,7 @@ import socket as sock
 import ssl
 # from ssl import wrap_socket, CERT_NONE, SSLError, PROTOCOL_SSLv23
 
-TCP_DEFAULT_FRAME_SIZE = 1200
+TCP_DEFAULT_FRAME_SIZE = 1024 # power of 2 max 4096
 
 class Transport(object):
     def __init__(self, hostname, port):

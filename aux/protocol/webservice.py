@@ -15,16 +15,16 @@ class WebService(object):
         # print self.source
 
 
-
 class WSDLService(WebService):
 
     def __init__(self, source, client):
         super(WSDLService, self).__init__(source, client)
         wsdl_response = http.get(self.client.get_proxy(self.source),
                                  headers=self.client.headers)
+        # print wsdl_response.body
         resource = etree.XML(wsdl_response.body)
         self.definitions = WSDLDefinitions(resource)
-        print "source", self.source
+        # print "source", self.source
         
     @classmethod
     def get_ns(cls, elmenet, namepspace):
@@ -47,14 +47,13 @@ def webservice_factory(source, client):
 
 class WSClient(object):
 
-    def __init__(self, referer):
-        self.referer = referer
+    def __init__(self, service):
+        self.service = service
         self.__api_sources = list()
         self.webservices = dict()
-        self.prefix = self.referer.PREFIX
-        # self.prefix = self.service.PREFIX + self.prefix        
-        self.SCHEME = self.referer.get_scheme        
-        self.headers = {'Host':self.referer.hostname,
+        self.prefix = self.service.PREFIX
+        self.SCHEME = self.service.get_scheme        
+        self.headers = {'Host':self.service.hostname,
                         'User-Agent': 'Aux/0.1 (X11;Ubuntu;Linux x86_64;rv:24.0)',
                         'Accept':'*/*'}        
 
@@ -63,7 +62,7 @@ class WSClient(object):
         if prefix == None:
             prefix = self.prefix
         return "%s%s%s%s" % (self.SCHEME(),
-                             self.referer.hostname,
+                             self.service.hostname,
                              prefix,
                              path)
     
