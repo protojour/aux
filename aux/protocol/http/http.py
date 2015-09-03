@@ -266,17 +266,20 @@ class HTTPClient(object):
     def put(self, url, headers={}, body="", request=None):
         return self.http_send('PUT', url, headers, body, request)
 
+    def patch(self, url, headers={}, body="", request=None):
+        return self.http_send('PATCH', url, headers, body, request)
+        
     def delete(self, url, headers={}, body="", request=None):
         return self.http_send('DELETE', url, headers, body, request)
 
-    # def connect(self, url, headers={}, body="", request=None):
-    #     return self.http_send('CONNECT', url, headers, body, request)
+    def connect(self, url, headers={}, body="", request=None):
+        return self.http_send('CONNECT', url, headers, body, request)
 
-    # def trace(self, url, headers={}, body="", request=None):
-    #     return self.http_send('TRACE', url, headers, body, request)    
+    def trace(self, url, headers={}, body="", request=None):
+        return self.http_send('TRACE', url, headers, body, request)    
 
-    # def options(self, url, headers={}, body="", request=None):
-    #     return self.http_send('OPTIONS', url, headers, body, request)    
+    def options(self, url, headers={}, body="", request=None):
+        return self.http_send('OPTIONS', url, headers, body, request)    
 
     def basic(self, credentials):
         return {'Authorization': 'Basic %s' % base64.b64encode(
