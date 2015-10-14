@@ -15,7 +15,7 @@ def working_dir():
 
 import aux
 from aux.logger import LogController
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 from aux.internals import plugin_creator_routine
 from aux.engine import engine_factory
@@ -65,7 +65,7 @@ def run():
     print(execfile(scripts_as_args[0]))
     ## - do teardown
     engine.stop()
-    logcontroller.summary['ended'] = datetime.now()
+
     
 # __all__ = ['device',
 #            'plugin',
@@ -76,5 +76,7 @@ __all__ = ['run']
 
 def exit_hook():
     if logcontroller is not None:
+        logcontroller.summary['stopped'] = datetime.now()
+        logcontroller.summary['runtime'] = logcontroller.summary['stopped'] - logcontroller.summary['started']
         logcontroller.pprint_summary_on_exit()
 sys.exitfunc = exit_hook
