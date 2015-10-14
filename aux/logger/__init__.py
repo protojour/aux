@@ -68,7 +68,7 @@ class LogController(object):
     def post_to_server(self):
         serverendpoint = self.config.options.log_server
         json_data = {'started' : str(self.summary.get('started')),
-                     'ended' : str(self.summary.get('ended')),
+                     'ended' : str(self.summary.get('stopped')),
                      'test' : self.summary.get('test'),
                      'success' : self.summary.get('success', False),
                      'testsubject' : str(self.summary.get('testsubject')),
