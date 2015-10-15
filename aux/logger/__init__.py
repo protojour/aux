@@ -11,7 +11,7 @@ class LogController(object):
     def __init__(self, config):
         self.config = config
         self.loggers = dict()
-        self.log_directory = config.options.log_directory
+        self.log_directory = os.path.join(config.options.log_directory, config.options.log_folder_name)
         self.log_console_level = config.options.log_level
         self.log_file_level = config.options.log_level
         if config.options.log_console_level is not None:
@@ -68,7 +68,7 @@ class LogController(object):
     def post_to_server(self):
         serverendpoint = self.config.options.log_server
         json_data = {'started' : str(self.summary.get('started')),
-                     'ended' : str(self.summary.get('stopped')),
+                     'stopped' : str(self.summary.get('stopped')),
                      'test' : self.summary.get('test'),
                      'success' : self.summary.get('success', False),
                      'testsubject' : str(self.summary.get('testsubject')),
