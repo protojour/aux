@@ -7,7 +7,8 @@ from optparse import OptionParser, OptionGroup
 from aux import base_dir, systems_pool
 from aux.system import get_system
 
-DEFAULT_PROPERTIES_FILE = base_dir()+"/../aux.properties"
+DEFAULT_PROPERTIES_FILE = os.path.abspath(base_dir()+"/../"+"aux.properties")
+DEFAULT_AUXLOG_FOLDER = "auxlogs"
 
 def str2loglevel(option, opt_str, value ,parser):
     if value is not None:
@@ -66,13 +67,11 @@ class Configuration(object):
                           dest="log_file_level",
                           type="string",
                           default=None)        
-        log_group.add_option("--logdir",
+        log_group.add_option("--logdirectory",
                           action="callback",
                           callback=dir2abspath,   
                           dest="log_directory",
-                          default=os.path.abspath(os.path.join(base_dir(),
-                                                               "..",
-                                                               "logs")),
+                          default=None,
                           type="string")
         log_group.add_option("--logsrv",
                           dest="log_server",
@@ -94,18 +93,19 @@ class Configuration(object):
 
     def load_default_properties(self):
         if self.options.configurationfile is None:
-            configfilestr = os.path.join(os.path.expanduser("~"), ".aux/aux.properties")
+            configfilestr = os.path.abspath(os.path.join(os.path.expanduser("~"), ".aux/aux.properties"))
         else:
             configfilestr = self.options.configurationfile
         if not os.path.exists(configfilestr):
             configfilestr = DEFAULT_PROPERTIES_FILE
         fp = open(configfilestr, "r")
         file_configs = json.loads(fp.read())
-
+        
+        self.options.log_folder_name = DEFAULT_AUXLOG_FOLDER
         if self.options.log_server is None:
             self.options.log_server = file_configs.get('logging').get('resultServer')
         if self.options.log_directory is None:
-            self.options.log_directory = file_configs.get('logging').get('logdir')
+            self.options.log_directory = file_configs.get('logging').get('logdirectory')
         if self.options.log_level is None:
             self.options.log_level = file_configs.get('logging').get('loglevel')
         if self.options.log_console_level is None:
