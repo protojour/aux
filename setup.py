@@ -19,6 +19,7 @@ setup(name='aux',
       zip_safe=False,
       install_requires=[
         'unittest2',
+        'lxml',
         'nose',
         'sphinx',
         'Fabric',
