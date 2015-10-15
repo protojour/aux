@@ -26,3 +26,11 @@ def todo():
 
 def distribute():
     local('python setup.py bdist --format zip')
+
+def release_test():
+    local('python setup.py register -r pypitest')
+    local('python setup.py sdist upload -r pypitest')    
+
+def release():
+    local('python setup.py register -r pypi')
+    local('python setup.py sdist upload -r pypi')
