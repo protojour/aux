@@ -7,12 +7,108 @@ layout: default
       <section>
         {% include menu.html %}
 
+        <h4>aux.api</h4>
+        <ul>
+          <li>
+            http
+            <ul>
+              <li>http.basic
+                <pre>
+http.basic( ('username', 'password') )                  
+returns:
+{'Authorization': 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=='}
+usage:
+headers.update(http.basic(credentials))
+                </pre>
+              </li>
+              <li>http.head
+                <pre>
+http.head(url="http://aux.com/api/resource", 
+          headers={})
+                </pre>
+              </li>
+              <li>http.get
+                <pre>
+http.get(url="http://aux.com/api/resource", 
+         headers={}, 
+         body="", 
+         request=None)
+-- or -- 
+You can use request=HTTPRequest instead of the other arguments,
+works for all http.methods.
+http.get(
+request=HTTPRequest('http://aux.com/api/resource',
+                    request_data={'method':'GET',
+                                  'headers:{},
+                                  'body'}
+                    )
+        )
+</pre>
+              </li>
+              <li>http.post
+                <pre>
+http.post(url="http://aux.com/api/resource", 
+          headers={}, 
+          body="")</pre>
+              </li>
+              <li>http.put
+                <pre>
+http.put(url="http://aux.com/api/resource", 
+         headers={}, 
+         body="")</pre>
+              </li>
+              <li>http.patch
+                <pre>
+http.patch(url="http://aux.com/api/resource", 
+           headers={}, 
+           body="")</pre>
+              </li>
+              <li>http.delete
+                <pre>
+http.delete(url="http://aux.com/api/resource/4", 
+            headers={}, 
+            body="")</pre>
+              </li>
+              <li>http.connect
+                <pre>
+http.connect(url="http://aux.com/api/resource", 
+             headers={}, 
+             body="")</pre>
+              </li>
+              <li>http.trace
+                <pre>
+http.trace(url="http://aux.com/api/resource", 
+           headers={}, 
+           body="")</pre>
+              </li>
+              <li>http.options
+                <pre>
+http.options(url="http://aux.com/api/resource", 
+             headers={}, 
+             body="")</pre>
+              </li>
+
+            </ul>
+          </li>
+          <li>ssh
+            <ul>
+              <li>ssh.set_hostname('hostname')</li>
+              <li>ssh.set_credentials(('username','password'))</li>
+              <li>ssh.cmd
+                <pre>
+ssh.cmd('ls .')
+Returns stdout.
+</pre>
+              </li>
+            </ul>
+          </li>
+        </ul>
         
         
 
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/protojour">protojour</a></p>
-      </footer>
+      <!-- <footer> -->
+      <!--   <p>This project is maintained by <a href="https://github.com/protojour">protojour</a></p> -->
+      <!-- </footer> -->
     </div>
     <script src="javascripts/scale.fix.js"></script>

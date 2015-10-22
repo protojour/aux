@@ -1,0 +1,24 @@
+---
+layout: default
+---
+
+{% include leftside.html %}
+<section>
+  {% include menu.html %}
+  <h1>Integrating your systems</h1>
+
+
+  <h4>Creating plugins</h4>
+  <pre>
+    aux --create_plugin=service myservice
+    pip install -e aux_service_myservice/
+  </pre>
+  <pre>
+    aux --create_plugin=device mydevice
+    pip install -e aux_device_mydevice
+  </pre>
+
+
+</section>
+</div>
+<script src="javascripts/scale.fix.js"></script>

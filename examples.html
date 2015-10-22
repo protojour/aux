@@ -5,33 +5,16 @@ layout: default
       {% include leftside.html %}
       <section>
         {% include menu.html %}
+        <h3>When...</h3>
+        <ul>
+          <li><a href="ex_setting_up_the_basics.html">Setting up the basics</a></li>
+          <li><a href="ex_integrating_your_systems.html">Integrating your systems</a></li>
+          <li><a href="ex_writing_your_first_testscripts.html">Writing your first testscripts</a></li>
+          <li><a href="ex_configuring_the_runtime.html">Configuring the runtime</a></li>
+        </ul>
 
-        <h3>Setting up systems.json</h3>
-        <pre>
-        [{"hostname":"some.name.or.ip.10.0.0.2",
-          "systemtype": "LinuxDevice",
-          "properties": [
-              {"authentication.rest": {
-                   "username":"user",
-                   "password":"password"
-                  }
-              },
-              {"authentication.ssh": {
-                   "username":"user",
-                   "password":"password"
-                  }
-              }]
-         },
-         {"hostname":"some.name.or.ip.10.0.0.3",
-          "systemtype": "MyDevice",
-          "properties": [
-              {"authentication.ssh": {
-                  "username":"user",
-                  "password":"password"}
-              }]
-        }]
-        </pre>
-        
+
+
         <h3>Working with plugins</h3>
         <h4>Creating plugins</h4>
         <pre>
@@ -53,8 +36,5 @@ layout: default
           from aux.protocol.ext import sip
         </pre>
       </section>
-      <!-- <footer class="site-footer"> -->
-      <!--   <p>This project is maintained by <a href="https://github.com/protojour">protojour</a></p> -->
-      <!-- </footer> -->
     </div>
     <script src="javascripts/scale.fix.js"></script>

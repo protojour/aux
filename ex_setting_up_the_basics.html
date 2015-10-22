@@ -1,0 +1,63 @@
+---
+layout: default
+---
+
+{% include leftside.html %}
+<section>
+  {% include menu.html %}
+
+  <h1>Setting up the basics</h1>
+
+  <h3>Installing AUX</h3>
+  <br/>
+  <h4>Installing with pip from pypi</h4>
+  <pre>
+    https://pypi.python.org/pypi/aux
+    pip aux
+    -- or --
+    sudo pip aux
+  </pre>
+  <h4>Installing from git source</h4>
+  <pre>
+    git clone git@github.com:protojour/aux.git
+    cd aux
+    pip install -e .
+  </pre>
+  <h4>The aux.properties file</h4>
+  <pre>
+    mkdir /home/$USER/.aux
+    echo '{"logging":{"loggdirectory": "/home/user/.aux/"}}' > /home/$USER/.aux/aux.properties
+  </pre>
+
+
+  <h3>Setting up systems.json</h3>
+<pre>
+[{"hostname":"some.name.or.ip.10.0.0.2",
+  "systemtype": "LinuxDevice",
+  "properties": [
+    {"authentication.rest": {
+       "username":"user",
+       "password":"password"
+       }
+    },
+    {"authentication.ssh": {
+       "username":"user",
+       "password":"password"
+       }
+    }]
+ },
+ {"hostname":"some.name.or.ip.10.0.0.3",
+  "systemtype": "MyDevice",
+  "properties": [
+    {"authentication.ssh": {
+       "username":"user",
+       "password":"password"}
+    }]
+ }]
+</pre>
+        
+
+
+</section>
+</div>
+<script src="javascripts/scale.fix.js"></script>

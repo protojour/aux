@@ -1,0 +1,12 @@
+---
+layout: default
+---
+
+{% include leftside.html %}
+<section>
+  {% include menu.html %}
+  
+
+</section>
+</div>
+<script src="javascripts/scale.fix.js"></script>

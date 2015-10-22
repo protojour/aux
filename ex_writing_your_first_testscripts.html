@@ -1,0 +1,45 @@
+---
+layout: default
+---
+
+{% include leftside.html %}
+<section>
+  {% include menu.html %}
+
+  <h1>Writing your first testscripts</h1>
+
+
+  <div>
+    <h4>Introduction</h4>
+    <p>
+      Before you get started, you might want to read the       
+      <a href="ex_integrating_your_systems.html">Integrating your systems</a> 
+      section to understand how aux supports plugins to separate the system logic from your scripts.
+
+    </p>
+    <p>
+      Aux is predominantly used for different forms of integration testing, where you view the system as a computer device or software service that you would like to manipulate in some way. The most typical form being regression tests. 
+    </p>
+    <p>
+      Aux tests are hitting your API and it imposes some requirements on the way the API is developed and maintained. A good and testable webservice API should be explicitly documented, versioned, follow well known practices and have clear responsibilities on the system. Often the first hurdle is to root out all the skelletons left by developers in a hurry.
+    </p>
+  </div>
+  <h4>Let's get started</h4>
+  <p>
+    The best way of starting from scratch is with smoke tests. You isolate some functionality where if it is not working your entire system would be down.
+  </p>
+  <p>
+    So let's make a smoke/ directory and start setting up tests.
+  </p>
+
+  <h4>First you need to connect to your systems</h4>
+  <pre>
+from aux.system import get_system
+my_device = get_system({"hostname": "localhost",
+                        "systemtype": "MyDevice"})
+print my_device.hostname
+  </pre>
+
+</section>
+</div>
+<script src="javascripts/scale.fix.js"></script>

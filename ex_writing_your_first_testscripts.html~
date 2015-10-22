@@ -1,0 +1,14 @@
+---
+layout: default
+---
+
+{% include leftside.html %}
+<section>
+  {% include menu.html %}
+
+  <h1>Writing Your First Testscripts</h1>
+
+
+</section>
+</div>
+<script src="javascripts/scale.fix.js"></script>
