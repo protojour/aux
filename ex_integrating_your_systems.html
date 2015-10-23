@@ -7,7 +7,15 @@ layout: default
   {% include menu.html %}
   <h1>Integrating your systems</h1>
 
-
+  <p>
+    Aux is a three part deal, consisting of aux core, aux plugins and aux scripts.
+  </p>
+  <p>
+    When exposing your system through an aux plugin you will want to create a plugin for your systems abstraction. In essence the methods for your integration.
+  </p>
+  <p>
+    With Aux everything is a system, and you either got a device, which is hardware based and that can have multiple services or you have a single service.
+  </p>
   <h4>Creating plugins</h4>
   <pre>
     aux --create_plugin=service myservice
@@ -17,7 +25,112 @@ layout: default
     aux --create_plugin=device mydevice
     pip install -e aux_device_mydevice
   </pre>
+  <p>
+    This creates an abstraction fascade that should be used while scripting, because this makes your scripts more clear to read, and you separate the responsibilities in an explicit way.
+  </p>
 
+  <h4>Setting up your system plugin</h4>
+  <p>
+    In this example, let DoorLock and CoffeGrinder be two systems.
+  </p>
+  <p>
+    DoorLock is a service, whereas CoffeGrinder is a device. Topic of deep philosofical debate, I know, but for now it is what it is!
+  </p>
+  <p>
+    To create the systems, run.
+  </p>
+  <pre>
+    aux --create_plugin=device coffeegrinder
+    pip install -e aux_device_coffeegrinder
+    aux --create_plugin=service doorlock
+    pip install -e aux_service_doorlock
+  </pre>
+  <p>
+    This creates normal python-egg-modules, do not rename these as the name tells aux how to deal with them.
+  </p>
+  <p>
+    Now we will first add some functionality to doorlock and then to coffeegrinder, assuming the plugins are in you current working directory.
+  </p>
+  <pre>
+cd aux_service_doorlock/aux_service_doorlock/
+touch doorlock.py
+    
+--edit doorlock.py--
+
+from aux.api import http
+import json
+
+class DoorLockAPI(object):
+  PREFIX = "/lock-api"
+  def __init__(self, service):
+    self.service = service
+    self._phys_lock = PhysMockLock(service.hostname)
+    self.PREFIX = self.service.PREFIX + self.PREFIX
+    self.headers = {'Host': self.service.hostname}
+
+  def get_proxy(self, path, prefix=None, noprefix=False):
+    if prefix==None:
+      prefix = self.PREFIX
+    if noprefix == True:
+      prefix = self.service.PREFIX+path
+    return "%s%s%s%s" % (self.SCHEME(),
+                         self.service.hostname,
+                         prefix,
+                         path)
+
+  def lock(self, requestdata):
+    headers = self.headers
+    headers.update(requestdata.get('headers'))
+    return http.put(self.get_proxy("lock"),
+                    headers=headers,
+                    body=requestdata.get('body'))
+
+from aux.system.service import Service
+
+class DoorLock(Service):
+  SCHEME = "http://"
+  def __init__(self, hostname):
+    super(DoorLock, self).__init__(hostname)
+    self.rest = DoorlockAPI(self):
+
+  </pre>
+  <p>Then a bit more straight forward for the Grinder</p>
+  <pre>
+from aux.system.device import Device
+from physcgrinder import CG
+
+class CoffeeGrinder(Device):
+  def __init__(self, hostname):
+    super(CoffeeGrinder, self).__init__(hostname)
+    self.levels = {"espresso": 0.2, "lungo": 0.5}
+
+  def has_beans(self):
+    return CG.bean_level > 1
+
+  def set_level(self, level):
+    CG.set_grind_level(self.levels.get(level))
+
+  def grind(self):
+    CG.do_grind()
+
+  </pre>
+  <p>Then calling these systems in the script would look something like this.</p>
+  <pre>
+from system import get_system
+doorlock = get_system({"hostname": "kitchenlock.srv", 
+                       "systemtype": "DoorLock"})
+c_grinder = get_system({"hostname": "cgrnd.srv", 
+                        "systemtype": "CoffeeGrinder"})
+
+doorlock.rest.lock(True)
+if c_grinder.has_beans():
+  c_grinder.set_level("espresso")
+  c_grinder.grind()
+doorlock.rest.lock(False)
+  </pre>
+  <p>
+    Voila! No-one was allowed to open the kitchen door while the coffe was grinding. Example full of logical pitfalls, but nevertheless it proves a point about integrating behavior of multiple systems.
+  </p>
 
 </section>
 </div>

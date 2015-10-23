@@ -32,13 +32,62 @@ layout: default
     So let's make a smoke/ directory and start setting up tests.
   </p>
 
-  <h4>First you need to connect to your systems</h4>
+  <h3>First you need to connect to your systems</h3>
+There are two ways of doing this, you can either specify all the details in script...
   <pre>
+# 1 - In script setup
+
 from aux.system import get_system
 my_device = get_system({"hostname": "localhost",
                         "systemtype": "MyDevice"})
 print my_device.hostname
   </pre>
+...or you can define the systems in a systems.json file. This allows you to set the target system on running the script.
+  <pre>
+# 2 - Using systems.json
+
+from aux.system import get_system
+my_device = get_system({"systemtype": "MyDevice"})
+print my_device.hostname
+  </pre>
+Run the script with aux --systems=/my/dir/systems.json aux_script.py 
+
+  <h3>Setting up systems.json</h3>
+The systems.json file defines the resources made available for the test.
+  <pre>
+[{"hostname":"some.name.or.ip.10.0.0.2",
+  "systemtype": "LinuxDevice",
+  "properties": [
+    {"authentication.rest": {
+       "username":"user",
+       "password":"password"
+       }
+    },
+    {"authentication.ssh": {
+       "username":"user",
+       "password":"password"
+       }
+    }]
+ },
+ {"hostname":"some.name.or.ip.10.0.0.3",
+  "systemtype": "MyDevice",
+  "properties": [
+    {"authentication.ssh": {
+       "username":"user",
+       "password":"password"}
+    }]
+ }]
+  </pre>
+        
+  <h3>System manipulation</h3>
+  <pre>
+response = my_device.rest.createResource({"name": "myres",
+                                          "value": 8})
+print response.status
+print response.headers
+print response.body
+  </pre>
+
 
 </section>
 </div>
