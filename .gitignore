@@ -1,0 +1,8 @@
+_site/
+dist/
+aux.egg-info/
+.sass-cache
+*.pyc
+*.pyo
+*~
+test

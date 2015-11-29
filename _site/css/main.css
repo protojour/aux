@@ -35,6 +35,15 @@ a small {
   margin-top: -0.6em;
   display: block; }
 
+.whitelink {
+  color: #fff; }
+
+.whitelink:hover {
+  color: #fff; }
+
+.whitelink:active {
+  color: #fff; }
+
 .wrapper {
   width: 860px;
   margin: 0 auto; }
@@ -51,7 +60,7 @@ code, pre {
   font-size: 12px; }
 
 pre {
-  padding: 8px 10px;
+  padding: 8px 5px;
   background: #f8f8f8;
   border-radius: 5px;
   border: 1px solid #e5e5e5;
