@@ -16,7 +16,7 @@ class SOAPRequest(object):
         return self._request()
         
     def _request(self):
-        return """<%s:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:kcen="http://kezzlerssp.com/schemas/kcengine" xmlns:com="http://kezzlerssp.com/schemas/common">
+        return """<%s:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" >
 <%s:Header/>
 <%s:Body>
 %s
